@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-//  --base keyword-- : 1st Usage : specify which base-class's constructor called when creating instances of a derived class !
+//  --base keyword-- : 2st Usage : specify which method (baseclass's method or derived class'method) called when revoke a virtual-override method
 
 namespace Console_Base_Keyword
 {
@@ -13,44 +13,31 @@ namespace Console_Base_Keyword
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("-------Instance of Base Class Created -----");
-            baseClass baseClass = new baseClass();       //--> Only run baseClass's parameterless-Constructor  
-            Console.WriteLine("-------Instance of Base Class Created -----");
-            baseClass baseClass1 = new baseClass(1);     //--> Only run baseClass's parameterized-Constructor 
-            Console.WriteLine("-------Instance of drived Class Created -----");
-            derivedClass derivedClass = new derivedClass();   //--> run baseClass's parameterless-Constructor +  derivedClass's parameterless-Constructor
-            Console.WriteLine("-------Instance of drived Class Created -----");
-            derivedClass derivedClass1 = new derivedClass(1); //--> run baseClass's parameterized-Constructor +  derivedClass's parameterized-Constructor
-            Console.WriteLine("-------Instance of drived Class based on base class Created -----");
-            baseClass m = new derivedClass();  //--> run baseClass's parameterless-Constructor +  derivedClass's parameterless-Constructor
-            Console.WriteLine("-------Instance of drived Class based on base class Created -----");
-            baseClass m1 = new derivedClass(1); //--> run baseClass's parameterized-Constructor +  derivedClass's parameterized-Constructor
+            DerivedClass derivedClass = new DerivedClass();
+            derivedClass.mymethod();         
+            
             Console.ReadKey();
         }
     }
 
-    class baseClass
+    class BaseClass
     {
-        public baseClass()
+        public virtual void mymethod()
         {
-            Console.WriteLine("I am base class's constructor (parameterless) \n \n");
+            Console.WriteLine("I am a virtual method of base class");
+            
+            
         }
-        public baseClass(int i)
-        {
-            Console.WriteLine("I am base class's constructor (parameterized) : {0} \n \n",i);
 
-        }
     }
-    class derivedClass : baseClass
+    class DerivedClass : BaseClass
     {
-        public derivedClass() :base()
+        public override void mymethod()
         {
-            Console.WriteLine("I am derived class's constructor (parameterless) \n \n");
+            Console.WriteLine("I am a override method of derived class");
 
+            base.mymethod();     //  with --base-keyword-- we have access to virtual method of base class inside the override method of derived class
         }
-        public derivedClass(int i) :base(i)
-        {
-            Console.WriteLine("I am derived class's constructor (parameterized) : {0} \n \n", i);
-        }
+       
     }
 }
